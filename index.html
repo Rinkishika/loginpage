@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page ni Mira</title>
+    <link rel="stylesheet" href="mira.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <!-- Firebase SDK -->
+    <script type="module">
+      // Import Firebase
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-app.js";
+      import { getAuth, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-auth.js";
+
+      // Firebase configuration
+      const firebaseConfig = {
+        apiKey: "AIzaSyAT1XwKsP69s7XQnFlPT1BPCnnfL2M4HSI",
+        authDomain: "login-1c623.firebaseapp.com",
+        projectId: "login-1c623",
+        storageBucket: "login-1c623.appspot.com",
+        messagingSenderId: "104418363553",
+        appId: "1:104418363553:web:7d72ebb392f383bb0088e0"
+      };
+
+      // Initialize Firebase
+      const app = initializeApp(firebaseConfig);
+      const auth = getAuth();
+
+      // Handle Google Sign-In
+      function googleSignIn() {
+        const provider = new GoogleAuthProvider();
+        
+        // Force account selection each time
+        provider.setCustomParameters({
+          prompt: 'select_account'
+        });
+
+        signInWithPopup(auth, provider)
+          .then((result) => {
+            const user = result.user;
+            console.log("User ID: " + user.uid);
+            console.log("User Full Name: " + user.displayName);
+            console.log("User Email: " + user.email);
+
+            // Redirect to profile page after successful login
+            window.location.href = "https://rinkishika.github.io/profile/";
+          })
+          .catch((error) => {
+            console.error("Error during sign-in:", error);
+          });
+      }
+
+      // Add event listener to sign-in button
+      window.onload = function () {
+        document.getElementById('google-signin-button').addEventListener('click', googleSignIn);
+      }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <div class="sign-in-box">
+            <h3>BUHAY AY DI KARERA!</h3>
+            <h2>Log In</h2>
+            <form action="#">
+                <div class="input-box">
+                    <input type="text" placeholder="username or email">
+                </div>
+                <div class="input-box">
+                    <input type="password" placeholder="password">
+                </div>
+                <button type="submit" class="sign-in-btn">Login</button>
+                <p>Or Sign in with</p>
+                <br>
+                <div class="social-icons">
+                  <button class="social-btn google-btn" id="google-signin-button"><i class="fa-brands fa-google"></i></button>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
